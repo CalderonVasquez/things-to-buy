@@ -1,6 +1,9 @@
+/* eslint-disable react/prop-types */
 import Todo from "./components/Todo";
 
 const App = (props) => {
+  const taskList = props.tasks?.map((task) => task.name);
+
   return (
     <div className="todoapp stack-large">
       <h1>TodoMatic</h1>
@@ -43,9 +46,7 @@ const App = (props) => {
         role="list"
         className="todo-list stack-large stack-exception"
         aria-labelledby="list-heading">
-        <Todo />
-        <Todo />
-        <Todo />
+        {taskList}
       </ul>
     </div>
   );
