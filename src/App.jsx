@@ -14,7 +14,8 @@ const App = (props) => {
   };
 
   const toggleTaskCompleted = (id) => {
-    
+    setTasks(updatedTask => updatedTask.map(task =>
+      id === task.id ? {...task, completed: !task.completed} : task))
   }
 
   const taskList = tasks?.map((task) =>
