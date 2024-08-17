@@ -5,10 +5,10 @@ import App from './App.jsx'
 import './index.css'
 
 const DATA = [
-  { id: "todo-0", name: "Eat", completed: true },
-  { id: "todo-1", name: "Sleep", completed: false },
-  { id: "todo-2", name: "Pray", completed: false },
-];
+  { name: 'Eat', id: 'todo-0', completed: true },
+  { name: 'Sleep', id: 'todo-1', completed: false },
+  { name: 'Pray', id: 'todo-2', completed: false },
+]
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
