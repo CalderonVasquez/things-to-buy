@@ -38,16 +38,18 @@ const App = (props) => {
     setTasks(remainingTasks => remainingTasks.filter(task => id !== task.id))
   }
 
-  const taskList = tasks?.map((task) =>
-    <Todo 
-      key={task.id}
-      name={task.name}
-      id={task.id}
-      completed={task.completed}
-      toggleTaskCompleted={() => toggleTaskCompleted(task.id)}
-      deleteTask={() => deleteTask(task.id)}
-      editTask={editTask}
-    />)
+  const taskList = tasks
+    .filter(FILTER_MAP[filter])
+    .map((task) =>
+      <Todo 
+        key={task.id}
+        name={task.name}
+        id={task.id}
+        completed={task.completed}
+        toggleTaskCompleted={() => toggleTaskCompleted(task.id)}
+        deleteTask={() => deleteTask(task.id)}
+        editTask={editTask}
+      />)
   
   const filterList = FILTER_NAMES.map((name) => 
     <FilterButton
