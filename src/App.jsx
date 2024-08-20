@@ -13,8 +13,6 @@ const FILTER_MAP = {
 
 const FILTER_NAMES = Object.keys(FILTER_MAP);
 
-
-
 const App = (props) => {
   const [tasks, setTasks] = useState(props.tasks)
   const [filter, setFilter] = useState("All")
