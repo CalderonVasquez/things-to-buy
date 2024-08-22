@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import Todo from "./components/Todo";
@@ -14,12 +13,23 @@ const App = (props) => {
     setTasks([...tasks, newTask])
   }
 
+  const toggleTaskCompleted = (id) => {
+    setTasks(completedTasks => completedTasks.map(task =>
+      id === task.id ? {...task, completed: !task.completed} : task))
+  }
+
+  const deleteTask = (id) => {
+    setTasks(remainingTasks => remainingTasks.filter(task => id !== task.id))
+  }
+
   const taskList = tasks?.map(task =>
     <Todo 
       key={task.id}
       name={task.name}
       id={task.name}
       completed={task.completed}
+      toggleTaskCompleted={() => toggleTaskCompleted(task.id)}
+      deleteTask={() => deleteTask(task.id)}
     />
   )
 
