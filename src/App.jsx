@@ -1,14 +1,20 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-// import { useState } from "react";
+import { useState } from "react";
 import Todo from "./components/Todo";
 import Form from "./components/Form";
 import FilterButton from "./components/FilterButton";
-// import { nanoid } from "nanoid"
+import { nanoid } from "nanoid"
 
 const App = (props) => {
+  const [tasks, setTasks] = useState(props.tasks)
 
-  const taskList = props.tasks?.map(task =>
+  const addTask = (name) => {
+    const newTask = { id: `todo-${nanoid()}`, name, completed: false }
+    setTasks([...tasks, newTask])
+  }
+
+  const taskList = tasks?.map(task =>
     <Todo 
       key={task.id}
       name={task.name}
@@ -20,7 +26,7 @@ const App = (props) => {
   return (
     <div className="todoapp stack-large">
       <h1>TodoMatic</h1>
-      <Form />
+      <Form addTask={addTask} />
       <div className="filters btn-group stack-exception">
         <FilterButton />
         <FilterButton />
