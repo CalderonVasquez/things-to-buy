@@ -1,87 +1,70 @@
 /* eslint-disable react/prop-types */
-
-import { useState } from "react";
+// import { useState } from "react";
 import Todo from "./components/Todo";
-import Form from "./components/Form";
-import FilterButton from "./components/FilterButton";
-import { nanoid } from "nanoid"
-
-const FILTER_MAP = {
-  All: () => true,
-  Active: (task) => !task.completed,
-  Completed: (task) => task.completed,
-}
-
-const FILTER_NAME = Object.keys(FILTER_MAP)
+// import { nanoid } from "nanoid"
 
 const App = (props) => {
-  const [tasks, setTasks] = useState(props.tasks)
-  const [filter, setFilter] = useState("All")
 
-  const addTask = (name) => {
-    const newTask = { id: `todo-${nanoid()}`, name, completed: false }
-    setTasks([...tasks, newTask])
-  }
-
-  const editTask = (id, newName) => {
-    setTasks(editedTask => editedTask.map(task =>
-      id === task.id ? { ...task, name: newName } : task))
-  }
-
-  const toggleTaskCompleted = (id) => {
-    setTasks(updatedTask => updatedTask.map(task =>
-      id === task.id ? {...task, completed: !task.completed} : task))
-  }
-
-  const deleteTask = (id) => {
-    setTasks(remainingTasks => remainingTasks.filter(task => id !== task.id))
-  }
-
-  const taskList = tasks
-    .filter(FILTER_MAP[filter])
-    .map(task =>
+  const taskList = props.tasks.map(task =>
     <Todo 
       key={task.id}
       name={task.name}
       id={task.id}
       completed={task.completed}
-      toggleTaskCompleted={() => toggleTaskCompleted(task.id)}
-      deleteTask={() => deleteTask(task.id)}
-      editTask={editTask}
     />
   )
-
-  const filterList = FILTER_NAME.map(name => 
-    <FilterButton 
-      key={name}
-      name={name}
-      isPressed={name === filter}
-      setFilter={() => setFilter(name)}
-    />
-  )
-
-  const taskNoun = taskList.length === 1 ? "task" : "tasks";
-  const headingText = `${taskList.length} ${taskNoun} remaining`
-
-  return (
-    <div className="todoapp stack-large">
-      <h1>TodoMatic</h1>
-      <Form addTask={addTask} />
-      <div className="filters btn-group stack-exception">
-        {filterList}
+    
+    return (
+      <div className="todoapp stack-large">
+        <h1>TodoMatic</h1>
+        <form>
+          <h2 className="label-wrapper">
+            <label htmlFor="new-todo-input" className="label__lg">
+              What needs to be done?
+            </label>
+          </h2>
+          <input
+            type="text"
+            id="new-todo-input"
+            className="input input__lg"
+            name="text"
+            autoComplete="off"
+          />
+          <button type="submit" className="btn btn__primary btn__lg">
+            Add
+          </button>
+        </form>
+        <div className="filters btn-group stack-exception">
+          <button type="button" className="btn toggle-btn" aria-pressed="true">
+            <span className="visually-hidden">Show </span>
+            <span>all</span>
+            <span className="visually-hidden"> tasks</span>
+          </button>
+          <button type="button" className="btn toggle-btn" aria-pressed="false">
+            <span className="visually-hidden">Show </span>
+            <span>Active</span>
+            <span className="visually-hidden"> tasks</span>
+          </button>
+          <button type="button" className="btn toggle-btn" aria-pressed="false">
+            <span className="visually-hidden">Show </span>
+            <span>Completed</span>
+            <span className="visually-hidden"> tasks</span>
+          </button>
+        </div>
+        <h2 id="list-heading">3 tasks remaining</h2>
+        <ul
+          role="list"
+          className="todo-list stack-large stack-exception"
+          aria-labelledby="list-heading">
+          {taskList}
+        </ul>
       </div>
-      <h2 id="list-heading">{headingText}</h2>
-      <ul
-        role="list"
-        className="todo-list stack-large stack-exception"
-        aria-labelledby="list-heading">
-        {taskList}
-      </ul>
-    </div>
-  );
-}
+    );
+  }
 
-export default App
+  export default App;
+
+
 
 
 
