@@ -13,6 +13,11 @@ const App = (props) => {
     setTasks([...tasks, newTask])
   }
 
+  const editTask = (id, newName) => {
+    setTasks(editedTask => editedTask.map(task =>
+      id === task.id ? {...task, newName} : task))
+  }
+
   const toggleTaskCompleted = (id) => {
     setTasks(updatedTasks => updatedTasks.map(task =>
       id === task.id ? {...task, completed: !task.completed} : task))
@@ -30,6 +35,7 @@ const App = (props) => {
       completed={task.completed}
       toggleTaskCompleted={() => toggleTaskCompleted(task.id)}
       deleteTask={() => deleteTask(task.id)}
+      editTask={editTask}
     />
   )
 
