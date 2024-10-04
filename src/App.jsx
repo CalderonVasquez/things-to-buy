@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import Todo from "./components/Todo";
@@ -5,8 +6,17 @@ import Form from "./components/Form";
 import FilterButton from "./components/FilterButton";
 import { nanoid } from "nanoid"
 
+const FILTER_MAP = {
+  All: () => true,
+  Active: (task) => !task.completed,
+  Completed: (task) => task.completed,
+}
+
+const FILTER_NAMES = Object.keys(FILTER_MAP)
+
 const App = (props) => {
   const [tasks, setTasks] = useState(props.tasks)
+  const [filter, setFilter] = useState("All")
 
   const addTask = (name) => {
     const newTask = { id: `todo-${nanoid()}`, name, completed: false }
@@ -27,7 +37,9 @@ const App = (props) => {
     setTasks(remainingTasks => remainingTasks.filter(task => id !== task.id))
   }
 
-  const taskList = tasks.map(task => 
+  const taskList = tasks
+    .filter(FILTER_MAP[filter])
+    .map(task => 
     <Todo 
       key={task.id}
       name={task.name}
@@ -39,6 +51,15 @@ const App = (props) => {
     />
   )
 
+  const filterList = FILTER_NAMES.map(name =>
+    <FilterButton 
+      key={name}
+      name={name}
+      isPressed={name === filter}
+      setFilter={() => setFilter(name)}
+    />
+  )
+
   const taskNoun = taskList.length === 1 ? "task" : "tasks";
   const headingText = `${taskList.length} ${taskNoun} remaining`;
    
@@ -47,9 +68,7 @@ const App = (props) => {
         <h1>TodoMatic</h1>
         <Form addTask={addTask} />
         <div className="filters btn-group stack-exception">
-          <FilterButton />
-          <FilterButton />
-          <FilterButton />
+          {filterList}
         </div>
         <h2 id="list-heading">{headingText}</h2>
         <ul
