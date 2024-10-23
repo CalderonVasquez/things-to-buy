@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 
-const Todo = ({name, id, completed}) => {
+const Todo = ({ name, id, completed, toggleTaskCompleted }) => {
     return (
         <li className="todo stack-small">
             <div className="c-cb">
-                <input id={id} type="checkbox" defaultChecked={completed} />
+                <input id={id} type="checkbox" defaultChecked={completed} onClick={toggleTaskCompleted} />
                 <label className="todo-label" htmlFor={id}>
                     {name}
                 </label>
