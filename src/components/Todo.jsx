@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-const Todo = ({ name, id, completed, toggleTaskCompleted }) => {
+const Todo = ({ name, id, completed, toggleTaskCompleted, deleteTask }) => {
     return (
         <li className="todo stack-small">
             <div className="c-cb">
@@ -13,7 +13,7 @@ const Todo = ({ name, id, completed, toggleTaskCompleted }) => {
                 <button type="button" className="btn">
                     Edit <span className="visually-hidden">{name}</span>
                 </button>
-                <button type="button" className="btn btn__danger">
+                <button type="button" className="btn btn__danger" onClick={deleteTask}>
                     Delete <span className="visually-hidden">{name}</span>
                 </button>
             </div>
