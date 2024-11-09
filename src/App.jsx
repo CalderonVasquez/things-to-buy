@@ -1,11 +1,18 @@
 /* eslint-disable react/prop-types */
-// import { useState } from "react";
+import { useState } from "react";
 import Todo from "./components/Todo";
-// import { nanoid } from "nanoid"
+import Form from "./components/Form";
+import { nanoid } from "nanoid"
 
 const App = (props) => {
+  const [tasks, setTasks] = useState(props.tasks)
 
-  const taskList = props.tasks.map(task => 
+  const addTasks = (name) => {
+    const newTasks = { id: `todo-${nanoid()}`, name, completed: false }
+    setTasks([...tasks, newTasks])
+  }
+
+  const taskList = tasks.map(task => 
     <Todo 
       key={task.id}
       name={task.name}
@@ -17,23 +24,7 @@ const App = (props) => {
   return (
     <div className="todoapp stack-large">
       <h1>TodoMatic</h1>
-      <form>
-        <h2 className="label-wrapper">
-          <label htmlFor="new-todo-input" className="label__lg">
-            What needs to be done?
-          </label>
-        </h2>
-        <input
-          type="text"
-          id="new-todo-input"
-          className="input input__lg"
-          name="text"
-          autoComplete="off"
-        />
-        <button type="submit" className="btn btn__primary btn__lg">
-          Add
-        </button>
-      </form>
+      <Form addTasks={addTasks} />
       <div className="filters btn-group stack-exception">
         <button type="button" className="btn toggle-btn" aria-pressed="true">
           <span className="visually-hidden">Show </span>
