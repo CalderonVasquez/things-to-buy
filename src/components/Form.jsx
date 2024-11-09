@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 const Form = ({addTasks}) => {
     const [name, setName] = useState(" ")
@@ -6,8 +7,16 @@ const Form = ({addTasks}) => {
         setName(e.target.value)
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if (name !== "") {
+            addTasks(name)
+            setName("")
+        }
+    }
+
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             <h2 className="label-wrapper">
                 <label htmlFor="new-todo-input" className="label__lg">
                     What needs to be done?
