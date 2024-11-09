@@ -21,6 +21,9 @@ const App = (props) => {
     />
   )
 
+  const taskNoun = taskList.length === 1 ? "task" : "tasks"
+  const headingText = `${taskList.length} ${taskNoun} remaining`
+
   return (
     <div className="todoapp stack-large">
       <h1>TodoMatic</h1>
@@ -42,7 +45,7 @@ const App = (props) => {
           <span className="visually-hidden"> tasks</span>
         </button>
       </div>
-      <h2 id="list-heading">3 tasks remaining</h2>
+      <h2 id="list-heading">{headingText}</h2>
       <ul
         role="list"
         className="todo-list stack-large stack-exception"
