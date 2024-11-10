@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Todo from "./components/Todo";
 import Form from "./components/Form";
+import FilterButton from "./components/FilterButton";
 import { nanoid } from "nanoid"
 
 const App = (props) => {
@@ -12,12 +13,18 @@ const App = (props) => {
     setTasks([...tasks, newTasks])
   }
 
+  const toggleTaskCompleted = (id) => {
+    setTasks(updatatedTasks => updatatedTasks.map(task => 
+      id === task.id ? {...task, completed: !task.completed} : task))
+  }
+
   const taskList = tasks.map(task => 
     <Todo 
       key={task.id}
       name={task.name}
       id={task.id}
       completed={task.completed}
+      toggleTaskCompleted={() => toggleTaskCompleted(task.id)}
     />
   )
 
@@ -29,21 +36,9 @@ const App = (props) => {
       <h1>TodoMatic</h1>
       <Form addTasks={addTasks} />
       <div className="filters btn-group stack-exception">
-        <button type="button" className="btn toggle-btn" aria-pressed="true">
-          <span className="visually-hidden">Show </span>
-          <span>all</span>
-          <span className="visually-hidden"> tasks</span>
-        </button>
-        <button type="button" className="btn toggle-btn" aria-pressed="false">
-          <span className="visually-hidden">Show </span>
-          <span>Active</span>
-          <span className="visually-hidden"> tasks</span>
-        </button>
-        <button type="button" className="btn toggle-btn" aria-pressed="false">
-          <span className="visually-hidden">Show </span>
-          <span>Completed</span>
-          <span className="visually-hidden"> tasks</span>
-        </button>
+        <FilterButton />
+        <FilterButton />
+        <FilterButton />
       </div>
       <h2 id="list-heading">{headingText}</h2>
       <ul
