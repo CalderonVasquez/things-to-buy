@@ -36,7 +36,9 @@ const App = (props) => {
     setTasks(remainingTasks => remainingTasks.filter(task => id !== task.id))
   }
 
-  const taskList = tasks.map(task => 
+  const taskList = tasks
+    .filter(FILTER_MAP[filter])
+    .map(task => 
     <Todo 
       key={task.id}
       name={task.name}
