@@ -1,54 +1,36 @@
-
+/* eslint-disable react/prop-types */
 // import { useState } from "react";
 import Todo from "./components/Todo";
+import Form from "./components/Form";
+import FilterButton from "./components/FilterButton";
 // import { nanoid } from "nanoid"
 
 const App = (props) => {
+
+  const taskList = props.tasks.map(task =>
+    <Todo 
+      key={task.id}
+      name={task.name}
+      id={task.id}
+      completed={task.completed}
+    />
+  )
+
   return (
     <div className="todoapp stack-large">
       <h1>TodoMatic</h1>
-      <form>
-        <h2 className="label-wrapper">
-          <label htmlFor="new-todo-input" className="label__lg">
-            What needs to be done?
-          </label>
-        </h2>
-        <input
-          type="text"
-          id="new-todo-input"
-          className="input input__lg"
-          name="text"
-          autoComplete="off"
-        />
-        <button type="submit" className="btn btn__primary btn__lg">
-          Add
-        </button>
-      </form>
+      <Form />
       <div className="filters btn-group stack-exception">
-        <button type="button" className="btn toggle-btn" aria-pressed="true">
-          <span className="visually-hidden">Show </span>
-          <span>all</span>
-          <span className="visually-hidden"> tasks</span>
-        </button>
-        <button type="button" className="btn toggle-btn" aria-pressed="false">
-          <span className="visually-hidden">Show </span>
-          <span>Active</span>
-          <span className="visually-hidden"> tasks</span>
-        </button>
-        <button type="button" className="btn toggle-btn" aria-pressed="false">
-          <span className="visually-hidden">Show </span>
-          <span>Completed</span>
-          <span className="visually-hidden"> tasks</span>
-        </button>
+        <FilterButton />
+        <FilterButton />
+        <FilterButton />
       </div>
       <h2 id="list-heading">3 tasks remaining</h2>
       <ul
         role="list"
         className="todo-list stack-large stack-exception"
         aria-labelledby="list-heading">
-        <Todo name="Eat" id="todo-0" completed/>
-        <Todo name="Sleep" id="todo-1"/>
-        <Todo name="Pray" id="todo-2"/>
+        {taskList}
       </ul>
     </div>
   );
@@ -58,15 +40,6 @@ export default App;
 
 
  
-
-
-
-
-
-
-
-
-
 
 // const App = (props) => {
 //   return (
