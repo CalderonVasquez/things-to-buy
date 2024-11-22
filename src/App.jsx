@@ -36,7 +36,9 @@ const App = (props) => {
       id === task.id ? {...task, name: newName} : task))
   }
 
-  const taskList = tasks.map(task =>
+  const taskList = tasks
+    .filter(FILTER_MAP[filter])
+    .map(task =>
     <Todo 
       key={task.id}
       name={task.name}
@@ -48,14 +50,14 @@ const App = (props) => {
     />
   )
 
-  const filterList = FILTER_NAMES.map(name => {
+  const filterList = FILTER_NAMES.map(name => 
     <FilterButton 
       key={name}
       name={name}
       isPressed={name === filter}
       setFilter={( ) => setFilter(name)}
     />
-  })
+  )
 
   const taskNoun = taskList.length === 1 ? "task" : "tasks";
   const headingText = `${taskList.length} ${taskNoun} remaining`
