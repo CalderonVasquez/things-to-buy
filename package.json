@@ -4,9 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "preinstall": "node -e \"if(process.arch!=='arm64'){console.error('❌ Wrong arch. Open a native ARM shell.');process.exit(1)}\"",
+    "doctor": "node -e \"console.log('node',process.version,'arch',process.arch)\" && npx vite --version",
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
